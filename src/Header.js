@@ -1,10 +1,22 @@
 export default function Header({ $target, initialState }) {
-  const $h1 = document.createElement("h1");
-  $target.appendChild($h1);
+  const $h2 = document.createElement("h2");
+  $target.appendChild($h2);
 
   this.state = initialState;
+
+  this.setState = (nextState) => {
+    this.state = nextState;
+    this.render();
+  };
   this.render = () => {
-    $h1.innerHTML = `${this.state} 님의 할일 목록`;
+    const { selectedUsername, isLoading } = this.state;
+    if (!selectedUsername) {
+      $h2.innerHTML = "";
+      return;
+    }
+    $h2.innerHTML = `${selectedUsername} 님의 할일 목록 ${
+      isLoading ? "로딩 중..." : ""
+    }`;
   };
   this.render();
 }
